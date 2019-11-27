@@ -4,67 +4,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Django Blog</title>
+    <title>TechnoBlog</title>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
           rel="stylesheet" media="screen"/>
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}"/>
+    <style>
+        .navbar
+        {
+            background: #14A76C;
+        }
+        .collapse
+        {
+            background-color: #14A76C;
+        }
+        body{background:#14A76C;}
+        navbar-brand{
+        color:black;}
+        navbar-brand:hover{color:white;}
+
+
+        @import "bourbon";
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+@include keyframes(scrollBad) {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -320px;
+  }
+}
+@include keyframes(scrollGood) {
+  0% {
+    transform: translate3d(0,0,0);
+  }
+  100% {
+    transform: translate3d(0,-320px,0);
+  }
+}
+.pen {
+  background-color: blue;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+.panel {
+  padding: 3rem;
+  height: 50%;
+}
+.top {
+  background-color: #3E69C3;
+  background-image: url(http://scarbroughstudios.com/img/codepen.svg);
+  background-position: center center;
+  background-size: 500px;
+  @include animation(scrollBad 5s linear infinite);
+}
+.bottom {
+  background-color: #31CC70;
+  overflow: hidden;
+  position: relative;
+
+  .scroll {
+    background-image: url(http://scarbroughstudios.com/img/codepen.svg);
+    background-position: center center;
+    background-size: 500px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 400%;
+    width: 100%;
+    z-index: 1;
+    @include animation(scrollGood 5s linear infinite);
+  }
+}
+
+    </style>
 
 </head>
-<body>
+<body class="pen panel top">
 
 <!-- navbar -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse ">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'blog:home' %}">Blog App</a>
+            <a class="navbar-brand" href="{% url 'blog:home' %}" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'" style="color:white">TechnoApp: Blog For Nerds</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse navbar-right">
+        <div id="navbar" class="collapse navbar-collapse navbar-right" >
             <!-- show registration only if user is not yet authenticated -->
             {% if not user.is_authenticated %}
-                <ul class="nav navbar-nav ">
-                    <li class="active"><a href="{% url 'register' %}">Registration</a></li>
+                <ul class="nav navbar-nav " >
+                    <li class="active"><a href="{% url 'register' %}" style="background: #14A76C;color:white" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'">Registration</a></li>
                 </ul>
             {% endif %}
             <!-- show login only if user is not yet authenticated -->
             {% if not user.is_authenticated %}
                 <ul class="nav navbar-nav ">
-                    <li class="active"><a href="{% url 'login' %}">Login</a></li>
+                    <li class="active"><a href="{% url 'login' %}" style="background: #14A76C;color:white" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'">Login</a></li>
                 </ul>
             {% endif %}
             <!-- show My Blog only if user is authenticated -->
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav ">
-                    <li class="active"><a href="{% url 'blog:user_posts' user.username %}">My Blog</a></li>
+                    <li class="active"><a href="{% url 'blog:user_posts' user.username %}" style="background: #14A76C;color:white" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'">My Blog</a></li>
                 </ul>
             {% endif %}
             <!-- show new post only if user is authenticated -->
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav ">
-                    <li class="active"><a href="{% url 'blog:create_post' %}">New Post</a></li>
+                    <li class="active"><a href="{% url 'blog:create_post' %}" style="background: #14A76C;color:white" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'">New Post</a></li>
                 </ul>
             {% endif %}
             <!-- show sign out only if user is authenticated -->
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav ">
-                    <li class="active"><a href="{% url 'logout' %}">Sign Out</a></li>
+                    <li class="active"><a href="{% url 'logout' %}" style="background: #14A76C;color:white" onmouseover="this.style.color='#FFE400'" onmouseout="this.style.color='white'">Sign Out</a></li>
                 </ul>
             {% endif %}
         </div>
     </div>
 </nav>
 
-<div id="content">
+<div id="content" >
     {% block content %}{% endblock %}
 </div>
 
 <hr>
 
 <!-- footer -->
-<div class="container">
+<div class="container" >
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 panel bottom scroll" >
 
             <!-- Logged user info -->
             {% if user.is_authenticated %}
@@ -76,9 +150,10 @@
                 </p>
             {% endif %}
 
-            <div>
-                <p class="text-center">&copy; 2017 Dusan Reljic</p>
+            <div >
+                <p class="text-center">&copy; 2019 Durgesh Nandan and Nitin Sabale Co-Founders of United Coders </p>
             </div>
+
 
         </div>
     </div>
